@@ -1,5 +1,6 @@
 const DEFAULTS = {
   enabled: true,
+  blurStyle: "pixel",
   patterns: {
     idKeyword: true,
     hashNumber: true,
@@ -22,6 +23,7 @@ const DEFAULTS = {
 };
 
 const enabledEl      = document.getElementById("enabled");
+const styleOptEls    = [...document.querySelectorAll(".style-opt")];
 const patternEls     = [...document.querySelectorAll("[data-pattern]")];
 const customRowsEl   = document.getElementById("customRows");
 const customCountEl  = document.getElementById("customCount");
@@ -33,11 +35,14 @@ const addHint        = document.getElementById("addHint");
 
 let currentType = "keyword";   // "keyword" | "regex"
 let customRules = [];
+let blurStyle = "pixel";       // "pixel" | "blur" | "solid"
 
 // ---- Load & render --------------------------------------------------------
 chrome.storage.sync.get(DEFAULTS, (s) => {
   enabledEl.checked = s.enabled;
   patternEls.forEach((el) => { el.checked = !!s.patterns[el.dataset.pattern]; });
+  blurStyle = s.blurStyle || "pixel";
+  renderStyle();
   customRules = s.customRules || [];
   renderCustom();
 });
@@ -46,11 +51,22 @@ chrome.storage.sync.get(DEFAULTS, (s) => {
 function save() {
   const patterns = {};
   patternEls.forEach((el) => (patterns[el.dataset.pattern] = el.checked));
-  chrome.storage.sync.set({ enabled: enabledEl.checked, patterns, customRules });
+  chrome.storage.sync.set({ enabled: enabledEl.checked, blurStyle, patterns, customRules });
 }
 
 enabledEl.addEventListener("change", save);
 patternEls.forEach((el) => el.addEventListener("change", save));
+
+// ---- Blur style picker -----------------------------------------------------
+function renderStyle() {
+  styleOptEls.forEach((el) => el.classList.toggle("active", el.dataset.style === blurStyle));
+}
+
+styleOptEls.forEach((el) => el.addEventListener("click", () => {
+  blurStyle = el.dataset.style;
+  renderStyle();
+  save();
+}));
 
 // ---- Type toggle -----------------------------------------------------------
 typeToggle.addEventListener("click", () => {

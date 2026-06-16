@@ -57,6 +57,31 @@
     }
     .rows { padding: 2px 6px 6px; }
 
+    /* -- Blur style picker ------------------------------------------------ */
+    .style-row {
+      display: flex;
+      gap: 4px;
+      padding: 2px 10px 8px;
+    }
+    .style-opt {
+      flex: 1;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--dim);
+      font: inherit;
+      font-size: 11px;
+      padding: 6px 4px;
+      cursor: pointer;
+      transition: color 120ms, border-color 120ms, background 120ms;
+    }
+    .style-opt:hover { color: var(--text); }
+    .style-opt.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: #1d3a2d;
+    }
+
     /* -- Row toggle ------------------------------------------------------- */
     label.row {
       display: flex;
@@ -203,6 +228,13 @@
     <h1>sensi<span>blur</span></h1>
     <input type="checkbox" id="enabled" title="Enable / disable" />
   </header>
+
+  <div class="section-label">Blur style</div>
+  <div class="style-row" id="styleRow">
+    <button class="style-opt" data-style="pixel" title="Pixelated mosaic">▦ Pixel</button>
+    <button class="style-opt" data-style="blur" title="Gaussian blur">≈ Blur</button>
+    <button class="style-opt" data-style="solid" title="Solid redaction bar">▬ Bar</button>
+  </div>
 
   <div class="section-label">Built-in patterns</div>
   <div class="rows" id="builtinRows">

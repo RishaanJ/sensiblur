@@ -43,6 +43,7 @@
 
   const DEFAULT_SETTINGS = {
     enabled: true,
+    blurStyle: "pixel",   // "pixel" | "blur" | "solid"
     patterns: {
       idKeyword: true,
       hashNumber: true,
@@ -159,10 +160,10 @@
     for (const { start, end } of ranges) {
       if (start > cursor) frag.appendChild(document.createTextNode(text.slice(cursor, start)));
       const span = document.createElement("span");
-      span.className = "sb-blur";
+      span.className = "sb-blur sb-style-" + settings.blurStyle;
       if (revealedAll) span.classList.add("sb-revealed");
       span.textContent = text.slice(start, end);
-      applyPixelStyle(span);
+      if (settings.blurStyle === "pixel") applyPixelStyle(span);
       span.title = "Click to reveal";
       span.setAttribute(`${PROCESSED}-wrap`, "1");
       frag.appendChild(span);

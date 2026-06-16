@@ -1,10 +1,7 @@
 /* SensiBlur — pixelated censor style */
 
 .sb-blur {
-  color: transparent !important;
   text-shadow: none !important;
-  background-repeat: repeat;
-  background-size: auto 100%;
   border-radius: 2px;
   cursor: pointer;
   user-select: none;
@@ -15,10 +12,26 @@
   transition: opacity 120ms ease;
 }
 
-/* Hide anything inside (links keep their color otherwise) */
-.sb-blur * {
+/* -- Pixel mosaic (default): canvas tiles painted inline ----------------- */
+.sb-blur.sb-style-pixel {
   color: transparent !important;
+  background-repeat: repeat;
+  background-size: auto 100%;
 }
+.sb-blur.sb-style-pixel * { color: transparent !important; }
+
+/* -- Gaussian blur: text stays in place but smeared out ------------------ */
+.sb-blur.sb-style-blur {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+/* -- Solid bar: classic redaction block ---------------------------------- */
+.sb-blur.sb-style-solid {
+  color: transparent !important;
+  background-color: #1c211e;
+}
+.sb-blur.sb-style-solid * { color: transparent !important; }
 
 .sb-blur:hover {
   opacity: 0.85;
@@ -27,15 +40,14 @@
 .sb-blur.sb-revealed {
   color: inherit !important;
   background-image: none !important;
+  background-color: rgba(122, 220, 180, 0.14) !important;
+  filter: none !important;
+  -webkit-filter: none !important;
   user-select: text;
-  background-color: rgba(122, 220, 180, 0.14);
   outline: 1px dashed rgba(122, 220, 180, 0.45);
   outline-offset: 1px;
 }
-
-.sb-blur.sb-revealed * {
-  color: inherit !important;
-}
+.sb-blur.sb-revealed * { color: inherit !important; }
 
 #sb-pill {
   position: fixed;
