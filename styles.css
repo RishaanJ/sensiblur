@@ -1,0 +1,65 @@
+/* SensiBlur — pixelated censor style */
+
+.sb-blur {
+  color: transparent !important;
+  text-shadow: none !important;
+  background-repeat: repeat;
+  background-size: auto 100%;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  padding: 1px 2px;
+  margin: -1px -2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: opacity 120ms ease;
+}
+
+/* Hide anything inside (links keep their color otherwise) */
+.sb-blur * {
+  color: transparent !important;
+}
+
+.sb-blur:hover {
+  opacity: 0.85;
+}
+
+.sb-blur.sb-revealed {
+  color: inherit !important;
+  background-image: none !important;
+  user-select: text;
+  background-color: rgba(122, 220, 180, 0.14);
+  outline: 1px dashed rgba(122, 220, 180, 0.45);
+  outline-offset: 1px;
+}
+
+.sb-blur.sb-revealed * {
+  color: inherit !important;
+}
+
+#sb-pill {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2147483647;
+  font: 600 12px/1 "SF Mono", ui-monospace, Menlo, monospace;
+  letter-spacing: 0.04em;
+  color: #d7e4dd;
+  background: #101513;
+  border: 1px solid #2c3a33;
+  border-radius: 999px;
+  padding: 9px 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+#sb-pill:hover {
+  border-color: #7adcb4;
+  color: #7adcb4;
+}
+
+#sb-pill.sb-pill-revealed {
+  border-color: #e0b35a;
+  color: #e0b35a;
+}

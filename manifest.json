@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "SensiBlur",
+  "version": "1.0.0",
+  "description": "Blurs sensitive info (IDs, account #s, amounts) in Gmail so you don't get flashbanged in public. Click to reveal.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://mail.google.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SensiBlur"
+  }
+}
